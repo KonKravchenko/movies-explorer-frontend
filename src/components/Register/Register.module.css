@@ -1,0 +1,14 @@
+.register {
+  display: flex;
+  width: min(100%, 396px);
+}
+
+.button {
+  margin: 69px 0 0;
+}
+
+@media screen and (max-width: 320px) {
+  .button {
+    margin: 157px 0 0;
+  }
+}
