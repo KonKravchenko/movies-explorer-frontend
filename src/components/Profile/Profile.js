@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Profile.css'
+import styles from './Profile.module.css'
 
-function Profile({ setHeadHidden, setFootHidden, setIsActive }) {
+function Profile({ setHeadHidden, setFootHidden, setIsActive, handleLogout }) {
 
   React.useEffect(() => {
     setHeadHidden(false)
@@ -40,10 +40,10 @@ function Profile({ setHeadHidden, setFootHidden, setIsActive }) {
         </form>
       </div>
 
-
+      <p className={styles.error}>Здесь будет текст ошибки после отправки запроса</p>
       <div className={styles.profile__button_container}>
         <button className={styles.profile__button_change}>Редактировать</button>
-        <button className={styles.profile__button_signout}>Выйти из аккаунта</button>
+        <button className={styles.profile__button_signout} type="button" onClick={handleLogout}>Выйти из аккаунта</button>
       </div>
     </section>
   );

@@ -6,13 +6,14 @@ import AboutProject from '../MainComponents/AboutProject/AboutProject';
 import Techs from '../MainComponents/Techs/Techs';
 import AboutMe from '../MainComponents/AboutMe/AboutMe';
 import Portfolio from '../MainComponents/Portfolio/Portfolio';
-import styles from './Main.css'
+import styles from './Main.module.css'
 
-function Main({ setHeadHidden, setFootHidden, setIsActive }) {
+function Main({ setHeadHidden, setFootHidden, setIsActive, handleMainLink }) {
   React.useEffect(() => {
     setHeadHidden(false)
     setFootHidden(false)
     setIsActive(false)
+    handleMainLink()
   })
 
   return (

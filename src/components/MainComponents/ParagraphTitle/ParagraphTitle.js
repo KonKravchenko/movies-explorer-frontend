@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './ParagraphTitle.css';
+import styles from './ParagraphTitle.module.css';
 import cx from 'classnames';
 
 function Paragraph ({paragraphTitle, style}) {

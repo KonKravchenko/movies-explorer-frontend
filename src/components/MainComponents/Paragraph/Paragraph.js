@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Paragraph.css';
+import styles from './Paragraph.module.css';
 import ParagraphTitle from '../ParagraphTitle/ParagraphTitle';
 import ParagraphText from '../ParagraphText/ParagraphText';
 

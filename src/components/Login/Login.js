@@ -1,12 +1,12 @@
 import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
-import styles from './Login.css'
+import styles from './Login.module.css'
 
 function Login({ setHeadHidden, setFootHidden, handleLogin }) {
 
 
   return (
-    <div className="Login">
+    <div className={styles.login}>
       <AuthForm
         setHeadHidden={setHeadHidden}
         setFootHidden={setFootHidden}

@@ -1,6 +1,6 @@
 // AboutProject — компонент с описанием дипломного проекта.
 import React from 'react';
-import styles from './AboutProject.css';
+import styles from './AboutProject.module.css';
 import cx from 'classnames';
 import SectionTitle from '../SectionTitle/SectionTitle';
 import Paragraph from '../Paragraph/Paragraph';
@@ -9,7 +9,7 @@ import Section from '../Section/Section'
 function AboutProject() {
 
   return (
-    <Section className={styles.section}>
+    <Section style={styles.aboutProject}>
       <SectionTitle sectionTitle='О проекте' />
       <div className={styles.container}>
         <Paragraph

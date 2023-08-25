@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import cx from 'classnames';
 import { ReactComponent as HeaderLogo } from '../../images/header_logo.svg';
-import styles from './AuthForm.css';
+import styles from './AuthForm.module.css';
 
 function AuthForm({ setHeadHidden, setFootHidden , name, title, button, text, pathLink, pathText, style, handleLogin }) {
 
@@ -73,13 +73,13 @@ function AuthForm({ setHeadHidden, setFootHidden , name, title, button, text, pa
           ></input>
 
 
-          <p className={styles.error}>error</p>
+          <p className={styles.error}>Здесь будет текст ошибки после отправки запроса</p>
         </div>
 
         <button 
         type="submit" 
         onSubmit={handleSubmit} 
-        className={cx(style, styles.button)}>{`${button}`}</button>
+        className={cx( styles.button, style)}>{`${button}`}</button>
 
         <nav className={styles.nav_container}>
           <p className={styles.nav_text}>{`${text}`}</p>

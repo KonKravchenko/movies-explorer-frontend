@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Block.css'
+import styles from './Block.module.css'
 
 function Block({ item }) {
   return (

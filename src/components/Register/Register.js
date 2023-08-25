@@ -1,11 +1,11 @@
 import React from 'react';
 import AuthForm from '../AuthForm/AuthForm';
-import styles from './Register.css'
+import styles from './Register.module.css'
 
 function Register({ setHeadHidden, setFootHidden }) {
 
   return (
-    <div className="Register">
+    <div className={styles.register}>
       <AuthForm
         setHeadHidden={setHeadHidden}
         setFootHidden={setFootHidden}

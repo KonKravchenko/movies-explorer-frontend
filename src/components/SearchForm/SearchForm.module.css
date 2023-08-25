@@ -1,0 +1,41 @@
+.search__form {
+  display: flex;
+  align-items: center;
+  column-gap: 46px;
+}
+
+.search__input {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  width: 100%;
+  color: rgba(139, 139, 139, 1);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: Inter;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.serch__button {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  max-width: 34px;
+  max-height: 34px;
+  border-radius: 17px;
+}
+
+.serch__button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 320px) {
+  .search__input {
+    font-size: 18px;
+  }
+}

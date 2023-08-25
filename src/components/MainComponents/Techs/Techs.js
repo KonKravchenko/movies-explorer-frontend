@@ -1,6 +1,6 @@
 // Techs — компонент с использованными технологиями.
 import React from 'react';
-import styles from './Techs.css';
+import styles from './Techs.module.css';
 import SectionTitle from '../SectionTitle/SectionTitle';
 import Section from '../Section/Section';
 import ParagraphTitle from '../ParagraphTitle/ParagraphTitle';

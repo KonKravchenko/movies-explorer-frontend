@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import style from './NotFoundPage.css'
+import style from './NotFoundPage.module.css'
 
 function NotFoundPage({ setHeadFootHidden }) {
 
