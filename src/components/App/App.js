@@ -85,9 +85,7 @@ function App() {
       <Routes>
 
         {/* <Route path="/*" element={loggedIn ? <Navigate to="/movies" replace /> : <Navigate to="/" replace />} /> */}
-        {/* <Route path="/" element={loggedIn ? <Navigate to="/movies" replace /> : <Navigate to="/" replace />} /> */}
- 
-  
+        {/* <Route path="/" element={loggedIn ? <Navigate to="/movies" replace /> : <Navigate to="/" replace />} /> */}  
   
         <Route path="/" element={<Main
           setHeadHidden={setHeadHidden}
@@ -130,9 +128,12 @@ function App() {
         <Route path="/signup" element={<Register
           setHeadHidden={setHeadHidden}
           setFootHidden={setFootHidden} />} />
-        <Route path="/*" element={<NotFoundPage
+
+        <Route path="*" element={<NotFoundPage
           setHeadHidden={setHeadHidden}
           setFootHidden={setFootHidden} />} />
+
+        {/* <Route path="/*" element={<NotFoundPage />}  /> */}
       </Routes>
 
       {loggedIn && <BurgerPopup 

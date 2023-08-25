@@ -1,16 +1,17 @@
 import React from 'react';
 import styles from './MoviesCardList.module.css'
-import MoviesCard from '../MoviesCard/MoviesCard'
+// import MoviesCard from '../MoviesCard/MoviesCard'
 
-function MoviesCardList({ addMovies, setAddMovies }) {
+function MoviesCardList({ addMovies, setAddMovies, children }) {
 
 
   return (
     <section className={styles.moviesCardList}>
-      <MoviesCard
+      {/* <MoviesCard
         addMovies={addMovies}
         setAddMovies={setAddMovies}
-      />
+      /> */}
+      {children}
     </section>
   );
 }

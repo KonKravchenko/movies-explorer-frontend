@@ -2,10 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import style from './NotFoundPage.module.css'
 
-function NotFoundPage({ setHeadFootHidden }) {
+function NotFoundPage({ setHeadHidden, setFootHidden }) {
 
   React.useEffect(() => {
-    setHeadFootHidden(true)
+    setHeadHidden(true)
+    setFootHidden(true)
   })
 
 

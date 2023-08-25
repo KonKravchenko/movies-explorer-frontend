@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './Movies.module.css'
-import MoviesSearch from '../MoviesSearch/MoviesSearch'
+import MoviesSearch from '../MoviesSearch/MoviesSearch';
+import MoviesCard from '../MoviesCard/MoviesCard';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function Movies({ setHeadHidden, setFootHidden, setIsActive, onFilter, setOnFilter, addMovies, setAddMovies, handleMovieLink  }) {
+function Movies({ setHeadHidden, setFootHidden, setIsActive, onFilter, setOnFilter, addMovies, setAddMovies, handleMovieLink }) {
 
   React.useEffect(() => {
     setHeadHidden(false)
@@ -18,9 +19,14 @@ function Movies({ setHeadHidden, setFootHidden, setIsActive, onFilter, setOnFilt
         onFilter={onFilter}
         setOnFilter={setOnFilter} />
       <MoviesCardList
-      addMovies={addMovies}
-      setAddMovies={setAddMovies}
-      />
+        addMovies={addMovies}
+        setAddMovies={setAddMovies}>
+        <MoviesCard
+          addMovies={addMovies}
+          setAddMovies={setAddMovies}
+        />
+      </MoviesCardList>
+
     </section>
   );
 }

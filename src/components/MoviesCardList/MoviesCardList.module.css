@@ -1,8 +1,11 @@
 .moviesCardList {
+  display:flex;
   margin: 0;
-  padding: 70px 5.46875vw 196px;
+  /* padding: 70px 5.46875vw 196px; */
+  padding: 70px 5.46875vw 0;
   row-gap: 32px;
   column-gap: 20px;
+  height: 44vh;
 }
 
 @media screen and (max-width: 768px) {

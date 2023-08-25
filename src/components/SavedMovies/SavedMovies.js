@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './SavedMovies.module.css'
 import MoviesSearch from '../MoviesSearch/MoviesSearch'
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 function SavedMovies({ setHeadHidden, setFootHidden, setIsActive, onFilter, setOnFilter, handleSavedMovieLink }) {
 
@@ -16,6 +17,7 @@ function SavedMovies({ setHeadHidden, setFootHidden, setIsActive, onFilter, setO
       <MoviesSearch
         onFilter={onFilter}
         setOnFilter={setOnFilter} />
+        <MoviesCardList />
     </section>
   );
 }
