@@ -1,11 +1,18 @@
-.Header {
+.header {
   margin: 0;
-  padding: 0 70px;
+  /* padding: 0 5.46875vw; */
+  padding: 0;
   background-color: rgba(7, 48, 66, 1);
-  max-height: 74px;
-
+  min-height: 74px;
+  /* width: 89.0625vw; */
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  /* justify-content: space-between; */
   align-items: center;
+}
+
+.background {
+  background-color: rgba(32, 32, 32, 1);
 }

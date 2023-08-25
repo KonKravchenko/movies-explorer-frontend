@@ -1,15 +1,20 @@
 import React from 'react';
-import { ReactComponent as HeaderLogo } from '../../images/header_logo.svg';
-import Navigation from '../Navigation/Navigation'
-function Header({ loggedIn }) {
+import styles from './Header.css';
+import cx from 'classnames';
 
+import Navigation from '../Navigation/Navigation'
+function Header({ loggedIn, isActive }) {
+
+
+  const headerStyle = !isActive ? (styles.header) : (cx(styles.header, styles.background));
   return (
-    <div className="Header">
-      <HeaderLogo />
+    <header className={headerStyle}>
+      
       <Navigation
         loggedIn={loggedIn}
+        isActive={isActive}
       />
-    </div>
+    </header>
   );
 }
 

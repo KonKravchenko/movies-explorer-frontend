@@ -1,11 +1,13 @@
-.App {
+.app {
   margin: 0 auto;
   padding: 0;
   background-color: rgba(32, 32, 32, 1);
-  width: 100%;
+  /* width: 100%; */
   min-height: 100vh;
-  display: grid;
-  gap: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* gap: 0; */
 
   font-family: 'Inter', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

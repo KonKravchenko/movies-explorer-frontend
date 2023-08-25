@@ -1,0 +1,117 @@
+.section {
+  background-color: rgba(32, 32, 32, 1);
+  /* padding: 110px 5.46875vw 106px; */
+  padding: 110px 0 106px;
+}
+
+.aboutStudent {
+  width: 89.0625vw;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 66px 0 101px;
+}
+
+.studentInfo {
+  display: flex;
+  flex-direction: column;
+  max-width: 46.875vw;
+}
+
+.studentInfo__name {
+  margin: 0;
+  padding: 0;
+  font-family: Inter;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 116%;
+  letter-spacing: -2px;
+}
+
+.studentInfo__profession {
+  margin: 0;
+  padding: 18px 0 0;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 111.111%;
+}
+
+.studentInfo__about {
+  margin: 0;
+  padding: 26px 0 0;
+  line-height: 157.143%;
+}
+
+.container__link {
+  margin: 0;
+  padding: 99px 0 0;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.profile_image {
+  min-width: 270px;
+  min-height: 327px;
+  border-radius: 10px;
+}
+
+.portfolio {
+  display: grid;
+  align-self: start;
+}
+
+.portfolio__title {
+  margin: 0;
+  padding: 0 0 30px;
+  color: rgba(139, 139, 139, 1);
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 111.111%;
+}
+
+.portfolio__link {
+  margin: 0;
+  padding: 20px 0 19px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 89.0625vw;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1);
+}
+.portfolio__link:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.portfolio__link_text {
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 166.667%;
+  letter-spacing: -1.2px;
+}
+
+.portfolio__link_border {
+  width: 89.0625vw;
+  border-bottom: 1px solid rgba(230, 230, 230, 1);
+}
+
+@media screen and (max-width: 768px) {
+  .aboutStudent {
+    column-gap: 6.38020vw;
+    /*  49px */
+  }
+
+}

@@ -1,0 +1,50 @@
+.section {
+  margin: 0;
+  padding: 246px 0 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  font-family: Inter;
+  font-size: 140px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.text {
+  margin: 0;
+  padding: 5px 0 0;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  font-family: Inter;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.link {
+  margin: 184px 0 0;
+  padding: 0;
+  text-decoration: none;
+  color: rgba(66, 133, 244, 1);
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  max-width: 42px;
+}
+
+.link:hover{
+  cursor:pointer;
+  opacity: 0.7;
+}

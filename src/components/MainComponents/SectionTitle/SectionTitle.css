@@ -1,0 +1,15 @@
+.title {
+  display: grid;
+  align-self: start;
+  margin: 0;
+  padding: 0 0 23px;
+  width: 89.0625vw;
+  border-bottom: 1px solid #FFF;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.88px;
+}
