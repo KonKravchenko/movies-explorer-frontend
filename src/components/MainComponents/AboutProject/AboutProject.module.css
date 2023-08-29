@@ -1,0 +1,125 @@
+.aboutProject {
+  background-color: rgba(32, 32, 32, 1);
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+  padding-top: 70px;
+  display: flex;
+  column-gap: 40px;
+}
+
+.line {
+  margin: 0;
+  padding: 0;
+  padding-top: 110px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  max-width: 1140px;
+}
+
+.week {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 14px;
+}
+
+.oneWeek {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(61, 220, 132, 1);
+  width: min(14.56vw, 228px);
+  height: 36px;
+  color: rgba(0, 0, 0, 1);
+}
+
+.fourWeek {
+  margin: 0;
+  padding: 0;
+  background-color: rgba(48, 48, 48, 1);
+  width: min(74.54vw, 912px);
+  height: 36px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.textAlign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weekFonts {
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.endFonts {
+  margin: 0;
+  padding: 0;
+  color: #8B8B8B;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 121.429%;
+}
+
+@media screen and (max-width: 768px) {
+  .line {
+    padding-top: 93px;
+  }
+
+  .oneWeek {
+    width: min(18.22vw, 140px);
+  }
+
+  .fourWeek {
+    width: min(68.75vw, 528px);
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .container {
+    margin: 0;
+    padding: 0;
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    column-gap: 40px;
+    row-gap: 56px;
+  }
+
+  .line {
+    padding-top: 60px;
+    
+  }
+
+  .oneWeek {
+    width: min(31.25vw, 100px);
+  }
+
+  .fourWeek {
+    width: min(57.5vw, 184px);
+  }
+
+  .weekFonts {
+    font-size: 11px;
+  }
+
+  .endFonts {
+    font-family: Suisse Intl;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+}

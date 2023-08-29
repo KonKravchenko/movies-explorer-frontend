@@ -1,0 +1,33 @@
+.moviesSearch {
+  margin: 0;
+  padding: 70px 5.46875vw 47px;
+  display: flex;
+  flex-direction: column;
+}
+
+.border {
+  margin: 0;
+  padding: 13px 0 0;
+  border: none;
+  border-bottom: 1px solid rgba(66, 66, 66, 1);
+}
+
+@media screen and (max-width: 768px) {
+  .moviesSearch {
+    padding: 80px 30px 60px;
+  }
+
+  .border {
+    padding: 13px 0 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .moviesSearch {
+    padding: 90px 14px 50px;
+  }
+
+  .border {
+    padding: 15px 0 0;
+  }
+}
