@@ -94,7 +94,7 @@ function handleApi(){
   mainApi.getProfileData()
   .then((data)=>{
     setCurrentUser(data)
-    console.log(currentUser)
+    console.log('currentUser', data)
   })
 }
   // Новый логин
