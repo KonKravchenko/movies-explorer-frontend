@@ -144,7 +144,7 @@ function handleApi(){
 
 
   return (
-
+<CurrentUserContext.Provider value={currentUser}>
     <div className={styles.app}>
       {!headHidden && <Header
         loggedIn={loggedIn}
@@ -220,7 +220,7 @@ function handleApi(){
 
       {!footHidden && <Footer />}
     </div>
-
+</CurrentUserContext.Provider>
   );
 }
 

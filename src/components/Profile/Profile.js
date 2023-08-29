@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Profile.module.css'
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile({ setHeadHidden, setFootHidden, setIsActive, handleLogout }) {
 
@@ -9,9 +10,11 @@ function Profile({ setHeadHidden, setFootHidden, setIsActive, handleLogout }) {
     setIsActive(true)
   })
 
+  const currentUser = React.useContext(CurrentUserContext);
+
   return (
     <section className={styles.profile}>
-      <h2 className={styles.profile__title}>Привет, Виталий!</h2>
+      <h2 className={styles.profile__title}>Привет, {`${currentUser.name}`}!</h2>
       <div className={styles.profile__form_container}>
         <form className={styles.profile__form}>
           <label className={styles.profile__label}>Имя</label>
@@ -24,6 +27,7 @@ function Profile({ setHeadHidden, setFootHidden, setIsActive, handleLogout }) {
             autoComplete="off"
             minLength="2"
             maxLength="30"
+            value={currentUser.name}
           ></input>
         </form>
         <hr className={styles.border}></hr>
@@ -36,6 +40,7 @@ function Profile({ setHeadHidden, setFootHidden, setIsActive, handleLogout }) {
             type="email"
             placeholder="Email"
             autoComplete="off"
+            value={currentUser.email}
           ></input>
         </form>
       </div>
