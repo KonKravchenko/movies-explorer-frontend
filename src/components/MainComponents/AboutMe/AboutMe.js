@@ -1,7 +1,6 @@
 // AboutMe — компонент с информацией о студенте.
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import cx from 'classnames';
 import Section from '../Section/Section';
 import styles from './AboutMe.module.css';
 import SectionTitle from '../SectionTitle/SectionTitle';

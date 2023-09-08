@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import cx from 'classnames';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import { ReactComponent as HeaderLogo } from '../../images/header_logo.svg';
@@ -17,15 +17,16 @@ function AuthForm({
   pathLink,
   pathText,
   style,
+  error
 }) {
 
-  
+  const location = useLocation();
   const {
     values,
     handleChange,
-    errors,
+    // errors,
     isValid,
-    resetForm,
+    // resetForm,
   } = useFormAndValidation(formValue)
 
 
@@ -41,26 +42,25 @@ function AuthForm({
   }
 
   function handleRegister(event) {
-    // event.preventDefault();
     if (!values.name || !values.email || !values.password) {
       return;
     }
     handle(values);
-    console.log(values)
   }
 
   function handleLogin(event) {
-    // event.preventDefault();
     if (!values.email || !values.password) {
       return;
     }
     handle(values);
-    console.log(values)
   }
+  
   function handleSubmit(event) {
     event.preventDefault();
     name === "register" ? handleRegister() : handleLogin()
   }
+
+  const buttonSubmitStyle = isValid ? cx(styles.button, style, styles.enable__button) : cx(styles.button, style, styles.disable__button)
 
   return (
     <div className={styles.authForm}>
@@ -119,14 +119,21 @@ function AuthForm({
           ></input>
 
 
-          <p className={styles.error}>Здесь будет текст ошибки после отправки запроса</p>
+          <p className={styles.error}>{error}</p>
         </div>
-
-        <button
-          type="submit"
-          onSubmit={handleSubmit}
-          className={cx(styles.button, style)}>{`${button}`}</button>
-
+        {location.pathname === '/signup'
+          ? <button
+            type="submit"
+            onSubmit={handleSubmit}
+            className={buttonSubmitStyle}
+            disabled={!(isValid && (values.name !== '' || values.email !== '' || values.password !== ''))}
+          >{`${button}`}</button>
+          : <button
+            type="submit"
+            onSubmit={handleSubmit}
+            className={buttonSubmitStyle}
+            disabled={!(isValid && (values.email !== '' || values.password !== ''))}
+          >{`${button}`}</button>}
         <nav className={styles.nav_container}>
           <p className={styles.nav_text}>{`${text}`}</p>
           <NavLink to={`${pathLink}`} className={styles.nav__link}>{`${pathText}`}</NavLink>

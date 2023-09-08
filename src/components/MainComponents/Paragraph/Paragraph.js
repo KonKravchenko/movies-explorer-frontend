@@ -9,9 +9,6 @@ function Paragraph({ paragraphTitle, paragraphText }) {
     <div className={styles.container}>
       <ParagraphTitle paragraphTitle={paragraphTitle} />
       <ParagraphText paragraphText={paragraphText} />
-
-      {/* <h2 className={styles.title}>{`${paragraphTitle}`}</h2>
-      <p className={styles.text}>{`${paragraphText}`}</p> */}
     </div>
   );
 }

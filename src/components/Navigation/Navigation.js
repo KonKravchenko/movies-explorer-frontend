@@ -23,26 +23,18 @@ function Navigation({ loggedIn, isActive, openPopup, movieLink, savedMovieLink }
 
       {!isActive ? (<HeaderLogo />) : (<HeaderLogo onClick={onMain} className={styles.logo} />)}
 
-
       {loggedIn &&
         <button className={styles.burger} onClick={openPopup}>
           <Burger />
-        </button>
-      }
-
+        </button>}
 
       {!loggedIn &&
         <nav className={styles.nav__auth_container}>
-          <NavLink to='/signup'
-            className={cx(styles.fonts, styles.link)}
-          >Регистрация</NavLink>
+          <NavLink to='/signup'  className={cx(styles.fonts, styles.link)}>Регистрация</NavLink>
           <NavLink to='/signin' >
             <button className={cx(styles.fonts, styles.button)}>Войти</button>
           </NavLink>
-        </nav>
-      }
-
-
+        </nav>}
 
       {isActive && (
         loggedIn &&
@@ -69,8 +61,8 @@ function Navigation({ loggedIn, isActive, openPopup, movieLink, savedMovieLink }
             <ProfileIcon />
           </NavLink>
         </nav>
-
       )}
+      
     </nav >
   );
 }

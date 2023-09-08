@@ -1,6 +1,6 @@
 .filterChekbox__container {
   margin: 0;
-  padding: 32px 0 0;
+  padding: 16px 0 0;
   display: flex;
   column-gap: 14px;
   align-items: center;
@@ -33,14 +33,14 @@
 
 @media screen and (max-width: 768px) {
   .filterChekbox__container {
-    padding: 29px 0 0;
+    padding: 15px 0 0;
     justify-content: flex-end;
   }
 }
 
 @media screen and (max-width: 320px) {
   .filterChekbox__container {
-    padding: 40px 0 0;
+    padding: 24px 0 0;
     justify-content: center;
   }
 

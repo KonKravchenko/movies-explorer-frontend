@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import styles from './Register.module.css'
 
-function Register({ handleRegister, setHeadHidden, setFootHidden }) {
+function Register({ handleRegister, setHeadHidden, setFootHidden, status, setStatus }) {
 
   const [formValue, setFormValue] = useState({
     name: '',
     email: '',
     password: ''
   })
+
+  const errorText =
+
+  status === 409 ? 'Пользователь с таким email уже существует' :
+    status === 400 ? 'При регистрации пользователя произошла ошибка' :
+      status === 500 ? 'На сервере произошла ошибка' : ''
+  ;
 
   function handle(data) {
     handleRegister(data)
@@ -28,6 +35,7 @@ function Register({ handleRegister, setHeadHidden, setFootHidden }) {
         pathLink='/signin'
         pathText='Войти'
         style={styles.button}
+        error={errorText}
       />
 
     </div>

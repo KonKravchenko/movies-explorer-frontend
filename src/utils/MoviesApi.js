@@ -12,7 +12,6 @@ class MoviesApi {
   getMovies() {
     return fetch(`${this.url}`, {
       method: 'GET',
-      // credentials: 'include', // теперь куки посылаются вместе с запросом
       headers: this.headers,
     })
       .then(this._checkResponse);
@@ -24,6 +23,5 @@ export const moviesApi = new MoviesApi({
   url: 'https://api.nomoreparties.co/beatfilm-movies',
   headers: {
     'Content-Type': 'application/json',
-    // 'Access-Control-Allow-Credentials': 'true'
   },
 });

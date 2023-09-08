@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import styles from './Login.module.css'
 
-function Login({ setHeadHidden, setFootHidden, handleLogin }) {
+function Login({ setHeadHidden, setFootHidden, handleLogin, status, setStatus }) {
 
   const [formValue, setFormValue] = useState({
-
     email: '',
     password: ''
   })
+
+  const errorText =
+
+  status === 401 ? 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.' :
+    status === 400 ? 'Вы ввели неправильный логин или пароль' :
+      status === 500 ? 'На сервере произошла ошибка' : ''
+  ;
+
 
   function handle(data) {
     handleLogin(data)
@@ -29,6 +36,7 @@ function Login({ setHeadHidden, setFootHidden, handleLogin }) {
         pathText='Регистрация'
         style={styles.button}
         handleLogin={handleLogin}
+        error={errorText}
       />
 
     </div>

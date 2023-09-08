@@ -34,11 +34,7 @@ function BurgerPopup({ isOpen, closePopup, mainLink, movieLink, savedMovieLink }
               Сохранённые фильмы
               <hr className={savedMovieLinkStyle}></hr>
             </NavLink>
-
-
           </nav>
-
-
           <NavLink to="/profile" className={cx(styles.popup__link, styles.popup__link_profile)} onClick={closePopup} >
             <p>Аккаунт</p>
             <ProfileIcon />
