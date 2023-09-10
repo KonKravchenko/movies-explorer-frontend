@@ -42,9 +42,12 @@ function Movies({
 
   React.useEffect(() => {
     const searchHistory = localStorage.getItem('SearchHistoryMovies')
-    if (searchHistory) {
+    const searchValues = localStorage.getItem('MoviesSearchValue')
+    if (searchHistory && searchValues) {
       const local = JSON.parse(searchHistory)
       setSearchResult(local.data)
+      const localValue = JSON.parse(searchValues)
+      handleMovies(localValue.searchValue)
     }
   }, [])
 
@@ -82,10 +85,9 @@ function Movies({
 
     if (filter) {
       shortFilm(result)
-      console.log('short')
     } else {
       checkSavedMovies(result)
-      console.log('res')
+      setShort(result)
     }
   }
 
@@ -93,11 +95,14 @@ function Movies({
 
   function shortFilm(result) {
     setIsLoading(true)
-    const shortFilms = result.filter(data =>
-      data.duration < 40)
-    console.log('крокозябра', shortFilms)
-    setShort(shortFilms)
-
+    const filter = localStorage.getItem('FilterMovies')
+    if (filter) {
+      const shortFilms = result.filter(data =>
+        data.duration < 40)
+      setShort(shortFilms)
+    } else {
+      checkSavedMovies(result)
+    }
     setIsLoading(false)
   }
 
@@ -109,11 +114,10 @@ function Movies({
       })
       .catch(err => {
         console.log('err', err)
-        console.log('data', data)
       })
   }
 
-  
+
 
   return (
     <section className={styles.movies}>
@@ -124,10 +128,10 @@ function Movies({
         formValue={formValue}
         searchData={searchData}
         searchFun={searchFun}
-        movies={movies}
+        movies={searchResult}
       />
       {isLoading ? (<Preloader />) : null}
-      {searchResult && !isLoading ? (<MoviesCardList result={searchResult} addMovie={addMovie} />) : null}
+      {searchResult && !isLoading ? (<MoviesCardList result={short} addMovie={addMovie} />) : null}
     </section>
   );
 }

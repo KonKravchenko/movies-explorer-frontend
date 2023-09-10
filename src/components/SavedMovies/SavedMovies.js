@@ -33,6 +33,7 @@ function SavedMovies({
     mainApi.getSavedMovies()
       .then((userMovies) => {
         localStorage.setItem('UserMovies', JSON.stringify({ userMovies }))
+
         setSavedMovies(userMovies)
         setSearchSavedMovies(userMovies)
         setIsLoading(false)
@@ -47,8 +48,9 @@ function SavedMovies({
     const item = localStorage.getItem('UserMovies')
     if (item) {
       const local = JSON.parse(item)
+      setSearchSavedMovies(local.userMovies)
       setSavedMovies(local.userMovies)
-      setSearchSavedMovies(null)
+      setSearchOn(false)
     } else { getSavedMovies() }
   }, [])
 
@@ -59,8 +61,12 @@ function SavedMovies({
       .then((res) => {
         const userMovies = savedMovies.filter(function item(c) { if (c._id !== film._id) { return c } })
         setSavedMovies(userMovies)
+        setSearchSavedMovies(userMovies)
         localStorage.setItem('UserMovies', JSON.stringify({ userMovies }))
-        checkSavedMovies(searchResult)
+        if (searchResult) {
+          checkSavedMovies(searchResult)
+        }
+
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
@@ -73,8 +79,9 @@ function SavedMovies({
     search: ''
   })
 
-
+  const [searchOn, setSearchOn] = useState(false)
   function handleMovies(search) {
+    setSearchOn(true)
     const searchValue = search
     localStorage.setItem('SavedMoviesSearchValue', JSON.stringify({ searchValue }))
     const item = search.search.toLowerCase()
@@ -112,7 +119,7 @@ function SavedMovies({
     }
   }
 
-
+  
   return (
     <section className={styles.savedMovies}>
       <MoviesSearch
@@ -124,7 +131,7 @@ function SavedMovies({
         searchFun={searchFun}
         movies={savedMovies} />
       {isLoading ? (<Preloader />) : null}
-      {searchResult && !isLoading ? (<MoviesCardList result={searchSavedMovies ? searchSavedMovies : savedMovies} handleDeleteMovies={handleDeleteMovies} />) : null}
+      {!isLoading ? (<MoviesCardList result={searchSavedMovies} handleDeleteMovies={handleDeleteMovies} />) : null}
     </section>
   );
 }

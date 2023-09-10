@@ -56,7 +56,6 @@ function App() {
 
   function openPopup() {
     setIsOpen(true)
-    console.log('clack')
   }
 
   function closePopup() {
@@ -92,7 +91,6 @@ function App() {
   function handleLogin(data) {
     mainApi.authorize(data)
       .then((res) => {
-        console.log(res)
         setStatus(res.status)
         handleApi()
         setLoggedIn(true);
@@ -124,6 +122,9 @@ function App() {
         localStorage.removeItem('Movies')
         localStorage.removeItem('SavedMoviesSearchValue')
         localStorage.removeItem('MoviesSearchValue')
+        localStorage.removeItem('FilterMovies')
+        localStorage.removeItem('FilterSavedMovies')
+        setSearchResult(null)
       }
       )
       .catch(err => {
@@ -135,11 +136,9 @@ function App() {
   const [profileChange, setProfileChange] = useState(false)
 
   function changeProfileData(data) {
-    console.log(data)
     mainApi.changeProfileData(data)
       .then((res) => {
         setStatus(200)
-        console.log(res)
         setProfileChange(false)
         setCurrentUser(data)
       })
@@ -168,7 +167,6 @@ function App() {
         localStorage.setItem('UserMovies', JSON.stringify({ userMovies }));
 
         setIsLoading(false)
-        console.log('checkSavedMovies', data)
       })
       .catch(err => {
         console.log(err)
@@ -177,7 +175,7 @@ function App() {
   }
 
 
-console.log('MoviesSearchResult', searchResult)
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={styles.app}>

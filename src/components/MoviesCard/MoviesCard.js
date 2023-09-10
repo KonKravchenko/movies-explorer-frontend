@@ -7,7 +7,6 @@ import { ReactComponent as DeleteMovieButton } from '../../images/popup_close.sv
 
 
 function MoviesCard({ movie, addMovie, handleDeleteMovies, movies }) {
-  // console.log(movie)
   const location = useLocation()
   const { country, director, duration, year, description, image: { url }, trailerLink, nameRU, nameEN, id: movieId
   } = movie
@@ -18,7 +17,7 @@ function MoviesCard({ movie, addMovie, handleDeleteMovies, movies }) {
       trailerLink, nameRU, nameEN, movieId,
       thumbnail: `https://api.nomoreparties.co${url}`
     })
-    
+
   }
 
   function getDuration(duration) {

@@ -33,8 +33,6 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
 
   }, [])
 
-
-   
   const [showCards, setShowCards] = useState(result.slice(0, step))
   const [position, setPosition] = useState(step);
 
@@ -51,7 +49,7 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
       setShowCards(result.slice(0, position + 2));
       setPosition(position + 2);
     }
-    console.log(width)
+
   }
 
   React.useEffect(() => {
@@ -70,30 +68,38 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
     } else if (width <= 767) {
       step = 5
     }
-    console.log(width)
+
   }
 
-  console.log('MoviesCardListResult', result)
-  console.log('MoviesCardListShowCards', showCards)
+
   return (
 
     <section className={styles.moviesCardList}>
       {location.pathname === '/movies'
-        ? < ul className={styles.moviesCardList_container}>
+        ? <ul className={styles.moviesCardList_container}>
           {result.length >= 1
-            ? showCards.map((film) =>
-              <MoviesCard
-                movie={film}
-                key={film.id ?? film._id}
-                addMovie={addMovie}
-                movies={result}
-                handleDeleteMovies={handleDeleteMovies}
-              />)
+            ? result.length > step
+              ? showCards.map((film) =>
+                <MoviesCard
+                  movie={film}
+                  key={film.id ?? film._id}
+                  addMovie={addMovie}
+                  movies={result}
+                  handleDeleteMovies={handleDeleteMovies}
+                />)
+              : result.map((film) =>
+                <MoviesCard
+                  movie={film}
+                  key={film.id ?? film._id}
+                  addMovie={addMovie}
+                  movies={result}
+                  handleDeleteMovies={handleDeleteMovies}
+                />)
             : notFound ? (<p className={styles.moviesCardList_error} >
               Ничего не найдено
             </p>) : null}
         </ul>
-        : < ul className={styles.moviesCardList_container}>
+        : <ul className={styles.moviesCardList_container}>
           {result.map((film) =>
             <MoviesCard
               movie={film}
