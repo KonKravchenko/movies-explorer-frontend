@@ -9,11 +9,27 @@ function FilterChekbox({ searchFun, movies, searchData }) {
 
   const [onFilter, setOnFilter] = useState(false);
 
+  React.useEffect(() => {
+    if (location.pathname === '/movies') {
+      const item = localStorage.getItem('FilterMovies')
+      if (item) { onFilterCheckbox() }
+    } else {
+      const item = localStorage.getItem('FilterSavedMovies')
+      if (item) { onFilterCheckbox() }
+    }
+  }, [])
+
   function onFilterCheckbox() {
     if (location.pathname === '/movies') {
-      localStorage.setItem('FilterMovies', JSON.stringify(true))
-      setOnFilter(true)
-      searchFun(searchData, movies)
+      if (searchData) {
+        localStorage.setItem('FilterMovies', JSON.stringify(true))
+        setOnFilter(true)
+        searchFun(searchData, movies)
+      } else {
+        localStorage.setItem('FilterMovies', JSON.stringify(true))
+        setOnFilter(true)
+      }
+
     } else {
       localStorage.setItem('FilterSavedMovies', JSON.stringify(true))
       setOnFilter(true)
@@ -23,9 +39,15 @@ function FilterChekbox({ searchFun, movies, searchData }) {
 
   function offFilterChekbox() {
     if (location.pathname === '/movies') {
-      localStorage.removeItem('FilterMovies')
-      setOnFilter(false)
-      searchFun(searchData, movies)
+      if (searchData) {
+        localStorage.removeItem('FilterMovies')
+        setOnFilter(false)
+        searchFun(searchData, movies)
+      } else {
+        localStorage.removeItem('FilterMovies')
+        setOnFilter(false)
+      }
+
     } else {
       localStorage.removeItem('FilterSavedMovies')
       setOnFilter(false)

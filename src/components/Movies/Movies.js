@@ -62,14 +62,16 @@ function Movies({
     localStorage.setItem('MoviesSearchValue', JSON.stringify({ searchValue }))
     const item = search.search.toLowerCase()
     setIsLoading(true)
-    const localMovies = localStorage.getItem('Movies')
 
+    const localMovies = localStorage.getItem('Movies')
     if (localMovies) {
       const local = JSON.parse(localMovies)
       setMovies(local.data)
       searchFun(item, local.data)
     }
-    else { getAllMovies(item) }
+    else {
+      getAllMovies(item)
+    }
   }
 
   const [searchData, setSearchData] = useState('')
@@ -80,13 +82,13 @@ function Movies({
     const result = film.filter(data =>
       (data.nameRU || data.nameEN).toLowerCase().includes(search)
     );
-
+    checkSavedMovies(result)
     const filter = localStorage.getItem('FilterMovies')
 
     if (filter) {
       shortFilm(result)
+
     } else {
-      checkSavedMovies(result)
       setShort(result)
     }
   }
@@ -100,8 +102,6 @@ function Movies({
       const shortFilms = result.filter(data =>
         data.duration < 40)
       setShort(shortFilms)
-    } else {
-      checkSavedMovies(result)
     }
     setIsLoading(false)
   }

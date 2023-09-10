@@ -68,7 +68,6 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
     } else if (width <= 767) {
       step = 5
     }
-
   }
 
 
