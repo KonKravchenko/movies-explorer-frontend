@@ -4,7 +4,7 @@ import styles from './FilterChekbox.module.css'
 import { ReactComponent as FilterCheckboxActive } from '../../images/FilterChekbox_active.svg';
 import { ReactComponent as FilterCheckboxDisable } from '../../images/FilterChekbox_disable.svg';
 
-function FilterChekbox({ searchFun, movies, searchData }) {
+function FilterChekbox({ searchFun, movies, searchData}) {
   const location = useLocation();
 
   const [onFilter, setOnFilter] = useState(false);
@@ -14,6 +14,7 @@ function FilterChekbox({ searchFun, movies, searchData }) {
       localStorage.setItem('FilterMovies', JSON.stringify(true))
       setOnFilter(true)
       searchFun(searchData, movies)
+      console.log(searchData, movies)
     } else {
       localStorage.setItem('FilterSavedMovies', JSON.stringify(true))
       setOnFilter(true)

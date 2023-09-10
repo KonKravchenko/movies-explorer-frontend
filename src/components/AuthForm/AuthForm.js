@@ -60,8 +60,8 @@ function AuthForm({
     name === "register" ? handleRegister() : handleLogin()
   }
 
-  const buttonSubmitStyle = isValid ? cx(styles.button, style, styles.enable__button) : cx(styles.button, style, styles.disable__button)
-
+  const buttonSubmitStyle = name === "register" ? isValid && (values.name !== '' || values.email !== '' || values.password !== '') ? cx(styles.button, style, styles.enable__button) : cx(styles.button, style, styles.disable__button)
+    : isValid && (values.email !== '' || values.password !== '') ? cx(styles.button, style, styles.enable__button) : cx(styles.button, style, styles.disable__button);
   return (
     <div className={styles.authForm}>
       <HeaderLogo onClick={onMain} className={styles.logo} />

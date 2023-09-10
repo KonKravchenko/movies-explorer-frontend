@@ -79,7 +79,6 @@ function SavedMovies({
     localStorage.setItem('SavedMoviesSearchValue', JSON.stringify({ searchValue }))
     const item = search.search.toLowerCase()
     searchFun(item, savedMovies)
-
   }
 
   const [searchData, setSearchData] = useState('')

@@ -14,6 +14,7 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
   const [notFound, setNotFound] = useState(true)
 
   React.useEffect(() => {
+
     if (location.pathname === '/movies') {
       const item = localStorage.getItem('SearchHistoryMovies')
       if (item) {
@@ -21,7 +22,7 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
       } else {
         setNotFound(false)
       }
-    }else{
+    } else {
       const item = localStorage.getItem('SearchHistorySavedMovies')
       if (item) {
         setNotFound(true)
@@ -32,6 +33,8 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
 
   }, [])
 
+
+   
   const [showCards, setShowCards] = useState(result.slice(0, step))
   const [position, setPosition] = useState(step);
 
@@ -70,8 +73,8 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
     console.log(width)
   }
 
-
-
+  console.log('MoviesCardListResult', result)
+  console.log('MoviesCardListShowCards', showCards)
   return (
 
     <section className={styles.moviesCardList}>

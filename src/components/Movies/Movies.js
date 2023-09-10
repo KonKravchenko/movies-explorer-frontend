@@ -64,7 +64,7 @@ function Movies({
     if (localMovies) {
       const local = JSON.parse(localMovies)
       setMovies(local.data)
-      searchFun(item, movies)
+      searchFun(item, local.data)
     }
     else { getAllMovies(item) }
   }
@@ -89,14 +89,14 @@ function Movies({
     }
   }
 
-
+  const [short, setShort] = useState([])
 
   function shortFilm(result) {
-
+    setIsLoading(true)
     const shortFilms = result.filter(data =>
       data.duration < 40)
-    console.log(shortFilms)
-    checkSavedMovies(shortFilms)
+    console.log('крокозябра', shortFilms)
+    setShort(shortFilms)
 
     setIsLoading(false)
   }
@@ -113,7 +113,7 @@ function Movies({
       })
   }
 
-
+  
 
   return (
     <section className={styles.movies}>

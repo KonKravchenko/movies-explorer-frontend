@@ -3,7 +3,7 @@ import styles from './MoviesSearch.module.css'
 import SearchForm from '../SearchForm/SearchForm';
 import FilterChekbox from '../FilterChekbox/FilterChekbox';
 
-function MoviesSearch({ onFilter, setOnFilter, handleMovies, formValue, searchData, searchFun, movies }) {
+function MoviesSearch({ onFilter, setOnFilter, handleMovies, formValue, searchData, searchFun, movies}) {
   const [searchError, setSearchError] = useState('')
   return (
 
@@ -20,7 +20,8 @@ function MoviesSearch({ onFilter, setOnFilter, handleMovies, formValue, searchDa
         setOnFilter={setOnFilter}
         searchFun={searchFun}
         movies={movies}
-        searchData={searchData} />
+        searchData={searchData} 
+        />
     </div>
   );
 }

@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import BurgerPopup from '../BurgerPopup/BurgerPopup';
 import { mainApi } from '../../utils/MainApi';
-import {ProtectedRouteElement, ProtectedRouteAuth} from '../../utils/ProtectedRouter';
+import { ProtectedRouteElement, ProtectedRouteAuth } from '../../utils/ProtectedRouter';
 
 
 import styles from './App.module.css';
@@ -105,7 +105,7 @@ function App() {
   }
 
   function handleIn() {
-    handleApi()    
+    handleApi()
   }
 
   React.useEffect(() => {
@@ -168,7 +168,7 @@ function App() {
         localStorage.setItem('UserMovies', JSON.stringify({ userMovies }));
 
         setIsLoading(false)
-        console.log('click')
+        console.log('checkSavedMovies', data)
       })
       .catch(err => {
         console.log(err)
@@ -177,7 +177,7 @@ function App() {
   }
 
 
-
+console.log('MoviesSearchResult', searchResult)
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={styles.app}>
