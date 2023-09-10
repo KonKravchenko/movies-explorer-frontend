@@ -3,6 +3,10 @@ import AuthForm from '../AuthForm/AuthForm';
 import styles from './Login.module.css'
 
 function Login({ setHeadHidden, setFootHidden, handleLogin, status, setStatus }) {
+  
+  React.useEffect(()=>{
+    setStatus('')
+  },[])
 
   const [formValue, setFormValue] = useState({
     email: '',

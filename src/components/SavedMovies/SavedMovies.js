@@ -23,18 +23,18 @@ function SavedMovies({
     setFootHidden(false)
     setIsActive(true)
     handleSavedMovieLink()
-    getSavedMovies()
   }, [])
 
   const [savedMovies, setSavedMovies] = useState([]);
-  const [searchSavedMovies, setSearchSavedMovies] = useState([])
+
 
   function getSavedMovies() {
     setIsLoading(true)
     mainApi.getSavedMovies()
-      .then((data) => {
-        setSavedMovies(data)
-        setSearchSavedMovies(data)
+      .then((userMovies) => {
+        localStorage.setItem('UserMovies', JSON.stringify({ userMovies }))
+        setSavedMovies(userMovies)
+        setSearchSavedMovies(userMovies)
         setIsLoading(false)
       })
       .catch(err => {
@@ -43,12 +43,43 @@ function SavedMovies({
       })
   }
 
+  React.useEffect(() => {
+    const item = localStorage.getItem('UserMovies')
+    if (item) {
+      const local = JSON.parse(item)
+      setSavedMovies(local.userMovies)
+      setSearchSavedMovies(null)
+    } else { getSavedMovies() }
+  }, [])
+
+
+  function handleDeleteMovies(film) {
+    console.log(film)
+    mainApi.deleteMovie(film._id)
+      .then((res) => {
+        const userMovies = savedMovies.filter(function item(c) { if (c._id !== film._id) { return c } })
+        setSavedMovies(userMovies)
+        localStorage.setItem('UserMovies', JSON.stringify({ userMovies }))
+        checkSavedMovies(searchResult)
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+      });
+  }
+
+
+  const [searchSavedMovies, setSearchSavedMovies] = useState([])
   const [formValue, setFormValue] = useState({
     search: ''
   })
 
+
   function handleMovies(search) {
-    searchFun(search, savedMovies)
+    const searchValue = search
+    localStorage.setItem('SavedMoviesSearchValue', JSON.stringify({ searchValue }))
+    const item = search.search.toLowerCase()
+    searchFun(item, savedMovies)
+
   }
 
   const [searchData, setSearchData] = useState('')
@@ -59,19 +90,20 @@ function SavedMovies({
       shortFilm(film)
     } else {
       const result = film.filter(data =>
-        (data.nameRU || data.nameEN).toLowerCase().includes(search.search)
+        (data.nameRU || data.nameEN).toLowerCase().includes(search)
       );
-      const filter = localStorage.getItem('filter')
+      const filter = localStorage.getItem('FilterSavedMovies')
       if (filter) {
         shortFilm(result)
       } else {
         setSearchSavedMovies(result)
+        localStorage.setItem('SearchHistorySavedMovies', JSON.stringify({ result }))
       }
     }
   }
 
   function shortFilm(result) {
-    const filter = localStorage.getItem('filter')
+    const filter = localStorage.getItem('FilterSavedMovies')
     if (filter) {
       const shortFilms = result.filter(data =>
         data.duration < 40)
@@ -81,16 +113,6 @@ function SavedMovies({
     }
   }
 
-  function handleDeleteMovies(data) {
-    mainApi.deleteMovie(data._id)
-      .then((res) => {
-        setSavedMovies(savedMovies.filter(function item(c) { if (c._id !== data._id) { return c } }))
-        checkSavedMovies(searchResult)
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`)
-      });
-  }
 
   return (
     <section className={styles.savedMovies}>
@@ -103,7 +125,7 @@ function SavedMovies({
         searchFun={searchFun}
         movies={savedMovies} />
       {isLoading ? (<Preloader />) : null}
-      {searchResult && !isLoading ? (<MoviesCardList result={searchSavedMovies} handleDeleteMovies={handleDeleteMovies} />) : null}
+      {searchResult && !isLoading ? (<MoviesCardList result={searchSavedMovies ? searchSavedMovies : savedMovies} handleDeleteMovies={handleDeleteMovies} />) : null}
     </section>
   );
 }

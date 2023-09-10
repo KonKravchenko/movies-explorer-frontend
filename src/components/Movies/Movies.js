@@ -41,7 +41,7 @@ function Movies({
   }
 
   React.useEffect(() => {
-    const searchHistory = localStorage.getItem('SearchHistory')
+    const searchHistory = localStorage.getItem('SearchHistoryMovies')
     if (searchHistory) {
       const local = JSON.parse(searchHistory)
       setSearchResult(local.data)
@@ -54,39 +54,50 @@ function Movies({
   })
 
   function handleMovies(search) {
+    localStorage.setItem('SearchHistoryMovies', JSON.stringify('data'))
+    const searchValue = search
+    localStorage.setItem('MoviesSearchValue', JSON.stringify({ searchValue }))
+    const item = search.search.toLowerCase()
     setIsLoading(true)
     const localMovies = localStorage.getItem('Movies')
 
     if (localMovies) {
       const local = JSON.parse(localMovies)
       setMovies(local.data)
-      searchFun(search, movies)
+      searchFun(item, movies)
     }
-    else { getAllMovies(search) }
+    else { getAllMovies(item) }
   }
 
   const [searchData, setSearchData] = useState('')
 
   function searchFun(search, film) {
     setSearchData(search)
+
     const result = film.filter(data =>
-      (data.nameRU || data.nameEN).toLowerCase().includes(search.search)
+      (data.nameRU || data.nameEN).toLowerCase().includes(search)
     );
-    const filter = localStorage.getItem('filter')
-    console.log('filter d ', filter)
+
+    const filter = localStorage.getItem('FilterMovies')
+
     if (filter) {
-      console.log('включен', filter)
       shortFilm(result)
+      console.log('short')
     } else {
-      console.log('выключен', filter)
       checkSavedMovies(result)
+      console.log('res')
     }
   }
 
+
+
   function shortFilm(result) {
+
     const shortFilms = result.filter(data =>
       data.duration < 40)
-    setSearchResult(shortFilms)
+    console.log(shortFilms)
+    checkSavedMovies(shortFilms)
+
     setIsLoading(false)
   }
 
@@ -95,7 +106,6 @@ function Movies({
     mainApi.addMovie(data)
       .then((res) => {
         checkSavedMovies(searchResult)
-        console.log(res)
       })
       .catch(err => {
         console.log('err', err)

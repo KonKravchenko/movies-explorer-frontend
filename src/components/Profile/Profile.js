@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Profile.module.css'
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
@@ -9,23 +9,27 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
   const currentUser = React.useContext(CurrentUserContext);
 
   const errorText =
+    status === 200 ? 'Данные успешно изменены' :
+      status === 409 ? 'Пользователь с таким email уже существует' :
+        status === 400 ? 'При обновлении профиля произошла ошибка' :
+          status === 500 ? 'При обновлении профиля произошла ошибка' : '';
 
-    status === 409 ? 'Пользователь с таким email уже существует' :
-      status === 400 ? 'При обновлении профиля произошла ошибка' :
-        status === 500 ? 'При обновлении профиля произошла ошибка' : ''
-    ;
+  React.useEffect(() => {
+    setStatus('')
+  }, [])
 
+  const errorStyle = status === 200 ? styles.done : styles.error;
+  
   const {
     values,
     handleChange,
-    // errors,
+    errors,
     isValid,
     // resetForm,
     setValues,
     setIsValid
   } = useFormAndValidation(currentUser)
 
-  const { name, email } = values;
 
   React.useEffect(() => {
     setValues(currentUser)
@@ -40,15 +44,19 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
 
   function handleSubmit(event) {
     event.preventDefault();
+    const { name, email } = values;
     changeProfileData({ name, email });
+
   }
 
   function change() {
     setStatus('')
+    values.name = currentUser.name
+    values.email = currentUser.email
     !profileChange ? setProfileChange(true) : setProfileChange(false)
   }
 
-  const buttonSaveStyle = isValid && (name !== currentUser.name || email !== currentUser.email)
+  const buttonSaveStyle = isValid && (values.name !== currentUser.name || values.email !== currentUser.email)
     ? cx(styles.profile__button_save, styles.enable__button_save)
     : cx(styles.profile__button_save, styles.disable__button_save)
   const formContainerStyle = profileChange ? cx(styles.profile__form_container, styles.profile__f_con_change) : styles.profile__form_container;
@@ -73,7 +81,7 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
               autoComplete="off"
               minLength="2"
               maxLength="30"
-              value={name}
+              value={values.name}
               onChange={handleChange}
               required
               noValidate
@@ -94,7 +102,7 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
               type="email"
               placeholder="Email"
               autoComplete="off"
-              value={email}
+              value={values.email}
               onChange={handleChange}
               required
               noValidate
@@ -105,12 +113,12 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
       </div>
 
       <div className={styles.profile__button_container}>
-        <p className={styles.error}>{errorText}</p>
+        <p className={errorStyle}>{errorText}</p>
         {profileChange
           ? (<button
             type="submit"
             onClick={handleSubmit}
-            disabled={!(isValid && (name !== currentUser.name || email !== currentUser.email))}
+            disabled={!(isValid && (values.name !== currentUser.name || values.email !== currentUser.email))}
             className={buttonSaveStyle}>
             Сохранить
           </button>)

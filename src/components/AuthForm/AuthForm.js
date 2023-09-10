@@ -24,7 +24,7 @@ function AuthForm({
   const {
     values,
     handleChange,
-    // errors,
+    errors,
     isValid,
     // resetForm,
   } = useFormAndValidation(formValue)
@@ -54,7 +54,7 @@ function AuthForm({
     }
     handle(values);
   }
-  
+
   function handleSubmit(event) {
     event.preventDefault();
     name === "register" ? handleRegister() : handleLogin()
@@ -87,6 +87,7 @@ function AuthForm({
             onChange={handleChange}
             noValidate
           ></input>}
+          {name === "register" && <p className={styles.error}>{errors.name}</p>}
 
 
           <label className={styles.label}>Email</label>
@@ -102,7 +103,7 @@ function AuthForm({
             required
             noValidate
           ></input>
-
+          <p className={styles.error}>{errors.email}</p>
 
           <label className={styles.label}>Пароль</label>
           <input
@@ -117,7 +118,7 @@ function AuthForm({
             required
             noValidate
           ></input>
-
+          <p className={styles.error}>{errors.password}</p>
 
           <p className={styles.error}>{error}</p>
         </div>

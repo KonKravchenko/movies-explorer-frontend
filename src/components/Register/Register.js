@@ -3,6 +3,10 @@ import AuthForm from '../AuthForm/AuthForm';
 import styles from './Register.module.css'
 
 function Register({ handleRegister, setHeadHidden, setFootHidden, status, setStatus }) {
+  
+  React.useEffect(()=>{
+    setStatus('')
+  },[])
 
   const [formValue, setFormValue] = useState({
     name: '',

@@ -1,9 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import { ReactComponent as SearchButton } from '../../images/search_button.svg';
 import styles from './SearchForm.module.css'
 
 function SearchForm({ handleMovies, formValue, setSearchError }) {
+
+  const location = useLocation();
 
   const {
     values,
@@ -22,7 +25,6 @@ function SearchForm({ handleMovies, formValue, setSearchError }) {
   function handleSubmit(event) {
     event.preventDefault();
     handleMovies(values);
-    resetForm();
   }
 
   function handleDisable(event) {
@@ -30,6 +32,23 @@ function SearchForm({ handleMovies, formValue, setSearchError }) {
     console.log('disable')
     setSearchError("Введите ключевое слово")
   }
+
+  React.useEffect(() => {
+    if (location.pathname === '/movies') {
+      const item = localStorage.getItem('MoviesSearchValue')
+      if (item) {
+        const local = JSON.parse(item)
+        values.search = local.searchValue.search
+      }
+    } else {
+      const item = localStorage.getItem('SavedMoviesSearchValue')
+      if (item) {
+        const local = JSON.parse(item)
+        values.search = local.searchValue.search
+      }
+    }
+
+  }, [])
 
   return (
 

@@ -1,16 +1,40 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styles from './MoviesCardList.module.css'
 
 
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 const { screen: { width } } = window;
-let step = width >= 1280 ? 16 : width <= 1279 && width >= 955 ? 12 : width <= 954 && width >= 788 ? 8 : width <= 767 ? 5 : 5;
+let step = width >= 1280 ? 16 : width <= 1279 && width >= 955 ? 12 : width <= 954 && width >= 788 ? 8 : width <= 767 && 5;
 
-function MoviesCardList({ result, addMovie }) {
-  console.log(result)
+function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
+  const location = useLocation();
+
+  const [notFound, setNotFound] = useState(true)
+
+  React.useEffect(() => {
+    if (location.pathname === '/movies') {
+      const item = localStorage.getItem('SearchHistoryMovies')
+      if (item) {
+        setNotFound(true)
+      } else {
+        setNotFound(false)
+      }
+    }else{
+      const item = localStorage.getItem('SearchHistorySavedMovies')
+      if (item) {
+        setNotFound(true)
+      } else {
+        setNotFound(false)
+      }
+    }
+
+  }, [])
+
   const [showCards, setShowCards] = useState(result.slice(0, step))
   const [position, setPosition] = useState(step);
+
 
   function showMore() {
     const { screen: { width } } = window;
@@ -27,27 +51,62 @@ function MoviesCardList({ result, addMovie }) {
     console.log(width)
   }
 
+  React.useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  function handleResize() {
+    const { screen: { width } } = window;
+    if (width >= 1280) {
+      step = 16
+    } else if (width <= 1279 && width >= 955) {
+      step = 12
+    } else if (width <= 954) {
+      step = 8
+    } else if (width <= 767) {
+      step = 5
+    }
+    console.log(width)
+  }
+
+
 
   return (
+
     <section className={styles.moviesCardList}>
-      <ul className={styles.moviesCardList_container}>
-        {result.length >= 1
-          ? showCards.map((film) =>
+      {location.pathname === '/movies'
+        ? < ul className={styles.moviesCardList_container}>
+          {result.length >= 1
+            ? showCards.map((film) =>
+              <MoviesCard
+                movie={film}
+                key={film.id ?? film._id}
+                addMovie={addMovie}
+                movies={result}
+                handleDeleteMovies={handleDeleteMovies}
+              />)
+            : notFound ? (<p className={styles.moviesCardList_error} >
+              Ничего не найдено
+            </p>) : null}
+        </ul>
+        : < ul className={styles.moviesCardList_container}>
+          {result.map((film) =>
             <MoviesCard
               movie={film}
               key={film.id ?? film._id}
               addMovie={addMovie}
               movies={result}
-            />)
-          : (<p className={styles.moviesCardList_error} >
-            Ничего не найдено
-          </p>)}
-      </ul>
-      {result.length > position
-        ? (<button type="button" className={styles.moviesCardList_button} onClick={showMore}>Ещё</button>)
+              handleDeleteMovies={handleDeleteMovies}
+            />
+          )}
+        </ul>}
+      {location.pathname === '/movies'
+        ? (result.length > position
+          ? (<button type="button" className={styles.moviesCardList_button} onClick={showMore}>Ещё</button>)
+          : null)
         : null}
-
-    </section>
+    </section >
   );
 }
 

@@ -41,7 +41,7 @@
   margin: 0;
   padding: 16px 0 17px;
   display: flex;
-  width: 32.03125vw;
+  min-width: 410px;
   justify-content: space-between;
 
   align-items: center;
@@ -92,6 +92,19 @@
   margin: 0;
   padding: 0 0 4px;
   color: rgba(255, 0, 76, 1);
+  text-align: center;
+  font-family: Inter;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.done{
+  height: 12px;
+  margin: 0;
+  padding: 0 0 4px;
+  color: rgb(0, 255, 55);
   text-align: center;
   font-family: Inter;
   font-size: 11px;
@@ -151,7 +164,7 @@
 .profile__button_save {
   margin: 0;
   padding: 13px 0 15px;
-  width: 100%;
+  min-width: 410px;
   border: none;
   border-radius: 3px;
   text-align: center;
@@ -175,4 +188,14 @@
 .enable__button_save {
   background: rgba(66, 133, 244, 1);
   color: #FFF;
+}
+
+@media screen and (max-width: 420px) {
+  .profile__button_save {
+    min-width: 260px;
+  }
+
+  .profile__form {
+    min-width: 260px;
+  }
 }

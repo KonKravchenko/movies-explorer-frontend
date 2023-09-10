@@ -93,7 +93,7 @@ class MainApi {
 
 
 export const mainApi = new MainApi({
-  url: 'https://api.konkravchenko.movies.nomoreparties.co',
+  url: 'https://api.konkravchenko.movies.nomoreparties.co', 
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Credentials': 'true'

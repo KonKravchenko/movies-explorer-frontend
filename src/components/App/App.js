@@ -12,6 +12,7 @@ import Footer from '../Footer/Footer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import BurgerPopup from '../BurgerPopup/BurgerPopup';
 import { mainApi } from '../../utils/MainApi';
+import {ProtectedRouteElement, ProtectedRouteAuth} from '../../utils/ProtectedRouter';
 
 
 import styles from './App.module.css';
@@ -79,10 +80,12 @@ function App() {
   function handleApi() {
     mainApi.getProfileData()
       .then((data) => {
-        setCurrentUser(data)
+        setCurrentUser(data);
+        setLoggedIn(true)
       })
       .catch((err) => {
         setStatus(err)
+        setLoggedIn(false)
       })
   }
 
@@ -102,8 +105,7 @@ function App() {
   }
 
   function handleIn() {
-    handleApi()
-    setLoggedIn(true);
+    handleApi()    
   }
 
   React.useEffect(() => {
@@ -116,6 +118,12 @@ function App() {
       .then((res) => {
         setLoggedIn(false);
         navigate('/', { replace: true });
+        localStorage.removeItem('SearchHistoryMovies')
+        localStorage.removeItem('SearchHistorySavedMovies')
+        localStorage.removeItem('UserMovies')
+        localStorage.removeItem('Movies')
+        localStorage.removeItem('SavedMoviesSearchValue')
+        localStorage.removeItem('MoviesSearchValue')
       }
       )
       .catch(err => {
@@ -130,7 +138,8 @@ function App() {
     console.log(data)
     mainApi.changeProfileData(data)
       .then((res) => {
-        setStatus(res.status)
+        setStatus(200)
+        console.log(res)
         setProfileChange(false)
         setCurrentUser(data)
       })
@@ -144,19 +153,22 @@ function App() {
 
   function checkSavedMovies(result) {
     mainApi.getSavedMovies()
-      .then((savedMovies) => {
+      .then((userMovies) => {
         const data = result.map((item) => {
-          const film = savedMovies.find(({ movieId, _id }) => movieId === item.id);
+          const film = userMovies.find(({ movieId, _id }) => movieId === item.id);
           if (film) {
             item.isSaved = true;
             item.savedId = film._id;
           } else item.isSaved = false;
           return item;
         })
-
         setSearchResult(data)
-        localStorage.setItem('SearchHistory', JSON.stringify({ data }))
+        const local = localStorage.getItem('SearchHistoryMovies');
+        local && localStorage.setItem('SearchHistoryMovies', JSON.stringify({ data }));
+        localStorage.setItem('UserMovies', JSON.stringify({ userMovies }));
+
         setIsLoading(false)
+        console.log('click')
       })
       .catch(err => {
         console.log(err)
@@ -179,8 +191,6 @@ function App() {
 
         <Routes>
 
-          {/* <Route path="/*" element={loggedIn ? <Navigate to="/movies" replace /> : <Navigate to="/" replace />} /> */}
-          {/* <Route path="/" element={loggedIn ? <Navigate to="/movies" replace /> : <Navigate to="/" replace />} /> */}
 
           <Route path="/" element={<Main
             setHeadHidden={setHeadHidden}
@@ -188,10 +198,9 @@ function App() {
             setIsActive={setIsActive}
             handleMainLink={handleMainLink}
           />} />
-          {/* {loggedIn && <Route path="/movies" element={<Movies />} />}
-        {loggedIn && <Route path="/saved-movies" element={<SavedMovies />} />}
-        {loggedIn &&  <Route path="/profile" element={<Profile />} />} */}
-          <Route path="/movies" element={<Movies
+
+
+          {loggedIn && <Route path="/movies" element={<ProtectedRouteElement loggedIn={loggedIn} element={Movies}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             setIsActive={setIsActive}
@@ -203,10 +212,9 @@ function App() {
             checkSavedMovies={checkSavedMovies}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
+          />} />}
 
-          />} />
-
-          <Route path="/saved-movies" element={<SavedMovies
+          {loggedIn && <Route path="/saved-movies" element={<ProtectedRouteElement loggedIn={loggedIn} element={SavedMovies}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             setIsActive={setIsActive}
@@ -218,8 +226,9 @@ function App() {
             checkSavedMovies={checkSavedMovies}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
-          />} />
-          <Route path="/profile" element={<Profile
+          />} />}
+
+          {loggedIn && <Route path="/profile" element={<ProtectedRouteElement loggedIn={loggedIn} element={Profile}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             setIsActive={setIsActive}
@@ -229,18 +238,22 @@ function App() {
             setStatus={setStatus}
             profileChange={profileChange}
             setProfileChange={setProfileChange}
-          />} />
-          <Route path="/signin" element={<Login
+          />} />}
+
+          {!loggedIn && <Route path="/signin" element={<ProtectedRouteAuth loggedIn={loggedIn} element={Login}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             handleLogin={handleLogin}
             status={status}
-          />} />
-          <Route path="/signup" element={<Register
+            setStatus={setStatus}
+          />} />}
+
+          {!loggedIn && <Route path="/signup" element={<ProtectedRouteAuth loggedIn={loggedIn} element={Register}
             handleRegister={handleRegister}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
-            status={status} />} />
+            status={status}
+            setStatus={setStatus} />} />}
 
           <Route path="*" element={<NotFoundPage
             setHeadHidden={setHeadHidden}

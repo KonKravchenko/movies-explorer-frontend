@@ -6,7 +6,8 @@ import { ReactComponent as TochkaDisable } from '../../images/tochka.svg';
 import { ReactComponent as DeleteMovieButton } from '../../images/popup_close.svg';
 
 
-function MoviesCard({ movie, addMovie, handleDeleteMovies }) {
+function MoviesCard({ movie, addMovie, handleDeleteMovies, movies }) {
+  // console.log(movie)
   const location = useLocation()
   const { country, director, duration, year, description, image: { url }, trailerLink, nameRU, nameEN, id: movieId
   } = movie
@@ -17,6 +18,7 @@ function MoviesCard({ movie, addMovie, handleDeleteMovies }) {
       trailerLink, nameRU, nameEN, movieId,
       thumbnail: `https://api.nomoreparties.co${url}`
     })
+    
   }
 
   function getDuration(duration) {
