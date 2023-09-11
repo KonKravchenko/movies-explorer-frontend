@@ -46,12 +46,17 @@ function SavedMovies({
 
   React.useEffect(() => {
     const item = localStorage.getItem('UserMovies')
+    const filter = localStorage.getItem('FilterSavedMovies')
     if (item) {
       const local = JSON.parse(item)
       setSearchSavedMovies(local.userMovies)
       setSavedMovies(local.userMovies)
-      setSearchOn(false)
-    } else { getSavedMovies() }
+      if (filter) {
+        shortFilm(local.userMovies)
+      }
+    } else {
+      getSavedMovies()
+    }
   }, [])
 
 
@@ -79,9 +84,9 @@ function SavedMovies({
     search: ''
   })
 
-  const [searchOn, setSearchOn] = useState(false)
+
   function handleMovies(search) {
-    setSearchOn(true)
+
     const searchValue = search
     localStorage.setItem('SavedMoviesSearchValue', JSON.stringify({ searchValue }))
     const item = search.search.toLowerCase()
@@ -119,7 +124,7 @@ function SavedMovies({
     }
   }
 
-  
+
   return (
     <section className={styles.savedMovies}>
       <MoviesSearch

@@ -42,12 +42,16 @@ function Movies({
 
   React.useEffect(() => {
     const searchHistory = localStorage.getItem('SearchHistoryMovies')
-    const searchValues = localStorage.getItem('MoviesSearchValue')
-    if (searchHistory && searchValues) {
+    const filter = localStorage.getItem('FilterMovies')
+    if (searchHistory) {
       const local = JSON.parse(searchHistory)
+      setShort(local.data)
       setSearchResult(local.data)
-      const localValue = JSON.parse(searchValues)
-      handleMovies(localValue.searchValue)
+      if (filter) {
+        shortFilm(local.data)
+      } else {
+        setShort(local.data)
+      }
     }
   }, [])
 
@@ -61,6 +65,7 @@ function Movies({
     const searchValue = search
     localStorage.setItem('MoviesSearchValue', JSON.stringify({ searchValue }))
     const item = search.search.toLowerCase()
+    setSearchData(item)
     setIsLoading(true)
 
     const localMovies = localStorage.getItem('Movies')
@@ -77,17 +82,15 @@ function Movies({
   const [searchData, setSearchData] = useState('')
 
   function searchFun(search, film) {
-    setSearchData(search)
 
     const result = film.filter(data =>
       (data.nameRU || data.nameEN).toLowerCase().includes(search)
     );
     checkSavedMovies(result)
-    const filter = localStorage.getItem('FilterMovies')
 
+    const filter = localStorage.getItem('FilterMovies')
     if (filter) {
       shortFilm(result)
-
     } else {
       setShort(result)
     }

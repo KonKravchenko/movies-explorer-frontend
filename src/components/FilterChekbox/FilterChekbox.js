@@ -19,12 +19,17 @@ function FilterChekbox({ searchFun, movies, searchData }) {
     }
   }, [])
 
+
   function onFilterCheckbox() {
     if (location.pathname === '/movies') {
-      if (searchData) {
+
+      const searchValues = localStorage.getItem('MoviesSearchValue')
+      const localValue = JSON.parse(searchValues)
+
+      if (localValue) {
         localStorage.setItem('FilterMovies', JSON.stringify(true))
         setOnFilter(true)
-        searchFun(searchData, movies)
+        searchFun(localValue.searchValue.search, movies)
       } else {
         localStorage.setItem('FilterMovies', JSON.stringify(true))
         setOnFilter(true)
@@ -34,20 +39,23 @@ function FilterChekbox({ searchFun, movies, searchData }) {
       localStorage.setItem('FilterSavedMovies', JSON.stringify(true))
       setOnFilter(true)
       searchFun(searchData, movies)
+
     }
   }
 
   function offFilterChekbox() {
     if (location.pathname === '/movies') {
-      if (searchData) {
+      const searchValues = localStorage.getItem('MoviesSearchValue')
+      const localValue = JSON.parse(searchValues)
+
+      if (localValue) {
         localStorage.removeItem('FilterMovies')
         setOnFilter(false)
-        searchFun(searchData, movies)
+        searchFun(localValue.searchValue.search, movies)
       } else {
         localStorage.removeItem('FilterMovies')
         setOnFilter(false)
       }
-
     } else {
       localStorage.removeItem('FilterSavedMovies')
       setOnFilter(false)
