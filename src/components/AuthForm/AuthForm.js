@@ -17,7 +17,9 @@ function AuthForm({
   pathLink,
   pathText,
   style,
-  error
+  error,
+  isLoading,
+  setIsLoading
 }) {
 
   const location = useLocation();
@@ -45,14 +47,20 @@ function AuthForm({
     if (!values.name || !values.email || !values.password) {
       return;
     }
-    handle(values);
+    if (regValid) {
+      setIsLoading(true)
+      handle(values);
+    }
   }
 
   function handleLogin(event) {
     if (!values.email || !values.password) {
       return;
     }
-    handle(values);
+    if (logValid) {
+      setIsLoading(true)
+      handle(values);
+    }
   }
 
   function handleSubmit(event) {
@@ -60,8 +68,12 @@ function AuthForm({
     name === "register" ? handleRegister() : handleLogin()
   }
 
-  const buttonSubmitStyle = name === "register" ? isValid && (values.name !== '' || values.email !== '' || values.password !== '') ? cx(styles.button, style, styles.enable__button) : cx(styles.button, style, styles.disable__button)
-    : isValid && (values.email !== '' || values.password !== '') ? cx(styles.button, style, styles.enable__button) : cx(styles.button, style, styles.disable__button);
+  const regValid = !isLoading && isValid && (values.name !== '' || values.email !== '' || values.password !== '');
+  const logValid = !isLoading && isValid && (values.email !== '' || values.password !== '');
+
+  const buttonSubmitStyle = name === "register" ? regValid ? cx(styles.button, style, styles.enable__button) : cx(styles.button, style, styles.disable__button)
+    : logValid ? cx(styles.button, style, styles.enable__button) : cx(styles.button, style, styles.disable__button);
+
   return (
     <div className={styles.authForm}>
       <HeaderLogo onClick={onMain} className={styles.logo} />
@@ -127,13 +139,13 @@ function AuthForm({
             type="submit"
             onSubmit={handleSubmit}
             className={buttonSubmitStyle}
-            disabled={!(isValid && (values.name !== '' || values.email !== '' || values.password !== ''))}
+            disabled={!regValid}
           >{`${button}`}</button>
           : <button
             type="submit"
             onSubmit={handleSubmit}
             className={buttonSubmitStyle}
-            disabled={!(isValid && (values.email !== '' || values.password !== ''))}
+            disabled={!logValid}
           >{`${button}`}</button>}
         <nav className={styles.nav_container}>
           <p className={styles.nav_text}>{`${text}`}</p>

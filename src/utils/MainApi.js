@@ -14,7 +14,7 @@ class MainApi {
     return fetch(`${this.url}/signup`, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify({ name, password, email })
+      body: JSON.stringify({name, password, email })
     })
       .then(this._checkResponse)
   };
@@ -34,7 +34,7 @@ class MainApi {
     return fetch(`${this.url}/signout`, {
       method: 'POST',
       headers: this.headers,
-      credentials: 'include',
+      credentials: 'include', 
       body: JSON.stringify({ email })
     })
       .then(this._checkResponse)
@@ -63,7 +63,7 @@ class MainApi {
   getSavedMovies() {
     return fetch(`${this.url}/movies`, {
       method: 'GET',
-      credentials: 'include',
+      credentials: 'include', 
       headers: this.headers
     })
       .then(this._checkResponse);
@@ -73,7 +73,7 @@ class MainApi {
     return fetch(`${this.url}/movies`, {
       method: 'POST',
       headers: this.headers,
-      credentials: 'include',
+      credentials: 'include', 
       body: JSON.stringify(data)
     })
       .then(this._checkResponse);
@@ -83,7 +83,7 @@ class MainApi {
     return fetch(`${this.url}/movies/${id}`, {
       method: 'DELETE',
       headers: this.headers,
-      credentials: 'include',
+      credentials: 'include', 
     })
       .then(this._checkResponse);
   }
@@ -94,6 +94,7 @@ class MainApi {
 
 export const mainApi = new MainApi({
   url: 'https://api.konkravchenko.movies.nomoreparties.co',
+  // url: 'http://localhost:3001',
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Credentials': 'true'

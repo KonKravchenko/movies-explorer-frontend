@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import AuthForm from '../AuthForm/AuthForm';
 import styles from './Login.module.css'
 
-function Login({ setHeadHidden, setFootHidden, handleLogin, status, setStatus }) {
-  
-  React.useEffect(()=>{
+function Login({ setHeadHidden, setFootHidden, handleLogin, status, setStatus, isLoading, setIsLoading }) {
+
+  React.useEffect(() => {
     setStatus('')
-  },[])
+  }, [])
 
   const [formValue, setFormValue] = useState({
     email: '',
@@ -15,10 +15,10 @@ function Login({ setHeadHidden, setFootHidden, handleLogin, status, setStatus })
 
   const errorText =
 
-  status === 401 ? 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.' :
-    status === 400 ? 'Вы ввели неправильный логин или пароль' :
-      status === 500 ? 'На сервере произошла ошибка' : ''
-  ;
+    status === 401 ? 'При авторизации произошла ошибка. Токен не передан или передан не в том формате.' :
+      status === 400 ? 'Вы ввели неправильный логин или пароль' :
+        status === 500 ? 'На сервере произошла ошибка' : ''
+    ;
 
 
   function handle(data) {
@@ -41,6 +41,8 @@ function Login({ setHeadHidden, setFootHidden, handleLogin, status, setStatus })
         style={styles.button}
         handleLogin={handleLogin}
         error={errorText}
+        isLoading={isLoading}
+        setIsLoading={setIsLoading}
       />
 
     </div>

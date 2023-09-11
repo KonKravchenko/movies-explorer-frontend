@@ -63,14 +63,15 @@ function App() {
   }
 
 
-  function handleRegister(data) {
-    mainApi.register(data)
+  function handleRegister({ email, name, password }) {
+    mainApi.register({ email, name, password })
       .then((res) => {
         setStatus(res.status)
-        navigate('/signin', { replace: true });
+        handleLogin({ email, password })
       })
       .catch(err => {
         setStatus(err)
+        setButtonLoading(false)
       });
   }
 
@@ -81,24 +82,27 @@ function App() {
       .then((data) => {
         setCurrentUser(data);
         setLoggedIn(true)
+        setButtonLoading(false)
       })
       .catch((err) => {
         setStatus(err)
         setLoggedIn(false)
+        setButtonLoading(false)
       })
   }
 
   function handleLogin(data) {
     mainApi.authorize(data)
       .then((res) => {
+        setButtonLoading(true)
         setStatus(res.status)
         handleApi()
         setLoggedIn(true);
         navigate("/movies", { replace: true })
-
       })
       .catch((err) => {
         setStatus(err)
+        setButtonLoading(false)
       })
   }
 
@@ -111,9 +115,9 @@ function App() {
   }, [])
 
   function handleLogout() {
-
     mainApi.signout(currentUser)
       .then((res) => {
+        setButtonLoading(true)
         setLoggedIn(false);
         navigate('/', { replace: true });
         localStorage.removeItem('SearchHistoryMovies')
@@ -125,10 +129,12 @@ function App() {
         localStorage.removeItem('FilterMovies')
         localStorage.removeItem('FilterSavedMovies')
         setSearchResult(null)
+        setButtonLoading(false)
       }
       )
       .catch(err => {
         console.log(`Ошибка handleLogout: ${err}`)
+        setButtonLoading(false)
       });
   }
 
@@ -141,9 +147,11 @@ function App() {
         setStatus(200)
         setProfileChange(false)
         setCurrentUser(data)
+        setButtonLoading(false)
       })
       .catch((err) => {
         setStatus(err)
+        setButtonLoading(false)
       })
   }
 
@@ -175,6 +183,29 @@ function App() {
   }
 
 
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [searchSavedMovies, setSearchSavedMovies] = useState([]);
+
+  function handleDeleteMovies(film) {
+    mainApi.deleteMovie(film._id || film.savedId)
+      .then((res) => {
+        const userMovies = savedMovies.filter(function item(c) { if (c._id !== film._id) { return c } })
+        const searchUserMovies = searchSavedMovies.filter(function item(c) { if (c._id !== film._id) { return c } })
+        setSavedMovies(userMovies)
+        setSearchSavedMovies(searchUserMovies)
+        localStorage.setItem('UserMovies', JSON.stringify({ userMovies }))
+        if (searchResult) {
+          checkSavedMovies(searchResult)
+        }
+
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+
+      });
+  }
+
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -198,7 +229,7 @@ function App() {
           />} />
 
 
-          {loggedIn && <Route path="/movies" element={<ProtectedRouteElement loggedIn={loggedIn} element={Movies}
+          <Route path="/movies" element={<ProtectedRouteElement loggedIn={loggedIn} element={Movies}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             setIsActive={setIsActive}
@@ -210,9 +241,10 @@ function App() {
             checkSavedMovies={checkSavedMovies}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
-          />} />}
+            handleDeleteMovies={handleDeleteMovies}
+          />} />
 
-          {loggedIn && <Route path="/saved-movies" element={<ProtectedRouteElement loggedIn={loggedIn} element={SavedMovies}
+          <Route path="/saved-movies" element={<ProtectedRouteElement loggedIn={loggedIn} element={SavedMovies}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             setIsActive={setIsActive}
@@ -224,9 +256,14 @@ function App() {
             checkSavedMovies={checkSavedMovies}
             isLoading={isLoading}
             setIsLoading={setIsLoading}
-          />} />}
+            handleDeleteMovies={handleDeleteMovies}
+            savedMovies={savedMovies}
+            setSavedMovies={setSavedMovies}
+            searchSavedMovies={searchSavedMovies}
+            setSearchSavedMovies={setSearchSavedMovies}
+          />} />
 
-          {loggedIn && <Route path="/profile" element={<ProtectedRouteElement loggedIn={loggedIn} element={Profile}
+          <Route path="/profile" element={<ProtectedRouteElement loggedIn={loggedIn} element={Profile}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             setIsActive={setIsActive}
@@ -236,22 +273,28 @@ function App() {
             setStatus={setStatus}
             profileChange={profileChange}
             setProfileChange={setProfileChange}
-          />} />}
+            isLoading={buttonLoading}
+            setIsLoading={setButtonLoading}
+          />} />
 
-          {!loggedIn && <Route path="/signin" element={<ProtectedRouteAuth loggedIn={loggedIn} element={Login}
+          <Route path="/signin" element={<ProtectedRouteAuth loggedIn={loggedIn} element={Login}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             handleLogin={handleLogin}
             status={status}
             setStatus={setStatus}
-          />} />}
+            isLoading={buttonLoading}
+            setIsLoading={setButtonLoading}
+          />} />
 
-          {!loggedIn && <Route path="/signup" element={<ProtectedRouteAuth loggedIn={loggedIn} element={Register}
+          <Route path="/signup" element={<ProtectedRouteAuth loggedIn={loggedIn} element={Register}
             handleRegister={handleRegister}
             setHeadHidden={setHeadHidden}
             setFootHidden={setFootHidden}
             status={status}
-            setStatus={setStatus} />} />}
+            setStatus={setStatus}
+            isLoading={buttonLoading}
+            setIsLoading={setButtonLoading} />} />
 
           <Route path="*" element={<NotFoundPage
             setHeadHidden={setHeadHidden}

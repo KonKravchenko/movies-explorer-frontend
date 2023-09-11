@@ -13,10 +13,11 @@ function FilterChekbox({ searchFun, movies, searchData }) {
     if (location.pathname === '/movies') {
       const item = localStorage.getItem('FilterMovies')
       if (item) { onFilterCheckbox() }
-    } else {
-      const item = localStorage.getItem('FilterSavedMovies')
-      if (item) { onFilterCheckbox() }
-    }
+    } 
+    // else {
+    //   const item = localStorage.getItem('FilterSavedMovies')
+    //   if (item) { onFilterCheckbox() }
+    // }
   }, [])
 
 

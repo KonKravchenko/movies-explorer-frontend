@@ -49,7 +49,7 @@ function MoviesCard({ movie, addMovie, handleDeleteMovies, movies }) {
           <p className={styles.moviesCard__time}>{getDuration(duration)}</p>
         </div>
         {location.pathname === '/movies'
-          ? <button className={styles.moviesCard__button} onClick={addMoviesCheckbox} disabled={movie.isSaved}>
+          ? <button className={styles.moviesCard__button} onClick={movie.isSaved ? deleteMovie : addMoviesCheckbox} >
             {movie.isSaved ? (<TochkaActive />) : (<TochkaDisable />)}
           </button>
           : <button className={styles.moviesCard__button} onClick={deleteMovie}>

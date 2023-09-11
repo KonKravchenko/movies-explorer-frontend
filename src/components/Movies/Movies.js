@@ -17,7 +17,8 @@ function Movies({
   setSearchResult,
   checkSavedMovies,
   isLoading,
-  setIsLoading
+  setIsLoading,
+  handleDeleteMovies
 }) {
 
   React.useEffect(() => {
@@ -82,9 +83,8 @@ function Movies({
   const [searchData, setSearchData] = useState('')
 
   function searchFun(search, film) {
-
     const result = film.filter(data =>
-      (data.nameRU || data.nameEN).toLowerCase().includes(search)
+      (data.nameRU || data.nameEN).toLowerCase().includes(search.toLowerCase())
     );
     checkSavedMovies(result)
 
@@ -117,10 +117,14 @@ function Movies({
       })
       .catch(err => {
         console.log('err', err)
+        setIsLoading(false)
       })
   }
 
-
+  function deleteMovies(data) {
+    
+    handleDeleteMovies(data)
+  }
 
   return (
     <section className={styles.movies}>
@@ -134,7 +138,7 @@ function Movies({
         movies={searchResult}
       />
       {isLoading ? (<Preloader />) : null}
-      {searchResult && !isLoading ? (<MoviesCardList result={short} addMovie={addMovie} />) : null}
+      {searchResult && !isLoading ? (<MoviesCardList result={short} addMovie={addMovie} handleDeleteMovies={deleteMovies} />) : null}
     </section>
   );
 }

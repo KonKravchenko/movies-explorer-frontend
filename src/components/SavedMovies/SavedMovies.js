@@ -15,7 +15,11 @@ function SavedMovies({
   searchResult,
   checkSavedMovies,
   isLoading,
-  setIsLoading
+  setIsLoading,
+  savedMovies,
+  setSavedMovies,
+  searchSavedMovies,
+  setSearchSavedMovies
 }) {
 
   React.useEffect(() => {
@@ -24,8 +28,6 @@ function SavedMovies({
     setIsActive(true)
     handleSavedMovieLink()
   }, [])
-
-  const [savedMovies, setSavedMovies] = useState([]);
 
 
   function getSavedMovies() {
@@ -45,15 +47,15 @@ function SavedMovies({
   }
 
   React.useEffect(() => {
+    localStorage.removeItem('SearchHistorySavedMovies')
+    localStorage.removeItem('SavedMoviesSearchValue')
+    localStorage.removeItem('FilterSavedMovies')
     const item = localStorage.getItem('UserMovies')
-    const filter = localStorage.getItem('FilterSavedMovies')
+
     if (item) {
       const local = JSON.parse(item)
       setSearchSavedMovies(local.userMovies)
       setSavedMovies(local.userMovies)
-      if (filter) {
-        shortFilm(local.userMovies)
-      }
     } else {
       getSavedMovies()
     }
@@ -65,8 +67,9 @@ function SavedMovies({
     mainApi.deleteMovie(film._id)
       .then((res) => {
         const userMovies = savedMovies.filter(function item(c) { if (c._id !== film._id) { return c } })
+        const searchUserMovies = searchSavedMovies.filter(function item(c) { if (c._id !== film._id) { return c } })
         setSavedMovies(userMovies)
-        setSearchSavedMovies(userMovies)
+        setSearchSavedMovies(searchUserMovies)
         localStorage.setItem('UserMovies', JSON.stringify({ userMovies }))
         if (searchResult) {
           checkSavedMovies(searchResult)
@@ -79,7 +82,7 @@ function SavedMovies({
   }
 
 
-  const [searchSavedMovies, setSearchSavedMovies] = useState([])
+
   const [formValue, setFormValue] = useState({
     search: ''
   })
@@ -101,7 +104,7 @@ function SavedMovies({
       shortFilm(film)
     } else {
       const result = film.filter(data =>
-        (data.nameRU || data.nameEN).toLowerCase().includes(search)
+        (data.nameRU || data.nameEN).toLowerCase().includes(search.toLowerCase())
       );
       const filter = localStorage.getItem('FilterSavedMovies')
       if (filter) {

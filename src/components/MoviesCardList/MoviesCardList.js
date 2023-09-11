@@ -6,7 +6,7 @@ import styles from './MoviesCardList.module.css'
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 const { screen: { width } } = window;
-let step = width >= 1280 ? 16 : width <= 1279 && width >= 955 ? 12 : width <= 954 && width >= 788 ? 8 : width <= 767 && 5;
+let step = width >= 1280 ? 16 : width <= 1279 && width >= 955 ? 12 : width <= 954 && width >= 768 ? 8 : width <= 767 && 5;
 
 function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
   const location = useLocation();
@@ -67,7 +67,7 @@ function MoviesCardList({ result, addMovie, handleDeleteMovies }) {
       step = 16
     } else if (width <= 1279 && width >= 955) {
       step = 12
-    } else if (width <= 954) {
+    } else if (width <= 954 && width >= 768) {
       step = 8
     } else if (width <= 767) {
       step = 5

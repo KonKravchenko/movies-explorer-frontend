@@ -4,7 +4,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 import cx from 'classnames';
 
-function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden, setIsActive, handleLogout, changeProfileData, status, setStatus }) {
+function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden, setIsActive, handleLogout, changeProfileData, status, setStatus, isLoading, setIsLoading }) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -19,7 +19,7 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
   }, [])
 
   const errorStyle = status === 200 ? styles.done : styles.error;
-  
+
   const {
     values,
     handleChange,
@@ -44,8 +44,12 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
 
   function handleSubmit(event) {
     event.preventDefault();
-    const { name, email } = values;
-    changeProfileData({ name, email });
+    if (valid) {
+      setIsLoading(true)
+      
+      const { name, email } = values;
+      changeProfileData({ name, email });
+    }
 
   }
 
@@ -61,7 +65,7 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
     : cx(styles.profile__button_save, styles.disable__button_save)
   const formContainerStyle = profileChange ? cx(styles.profile__form_container, styles.profile__f_con_change) : styles.profile__form_container;
 
-
+  const valid = !isLoading && isValid && (values.name !== currentUser.name || values.email !== currentUser.email)
 
   return (
     <section className={styles.profile}>
@@ -118,7 +122,7 @@ function Profile({ profileChange, setProfileChange, setHeadHidden, setFootHidden
           ? (<button
             type="submit"
             onClick={handleSubmit}
-            disabled={!(isValid && (values.name !== currentUser.name || values.email !== currentUser.email))}
+            disabled={!valid}
             className={buttonSaveStyle}>
             Сохранить
           </button>)
